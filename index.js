@@ -171,26 +171,33 @@ function stringSplite(str, reg) {
 stringSplite(a, regStr)
 
 
-function stringFilter(str, config) {
-    let currentLevel = config.length
+let currentLevel = 0
+function stringFilter(str, config, currentLevel) {
+    let totalLevel = config.length
     let currentFilter = config[currentLevel]
-    currentLevel -= 1
-    if (currentLevel < 0) {
+
+    if (currentLevel > totalLevel) {
         return false
     }
+
+
+
     for (let key in currentFilter) {
-        console.log(currentFilter[key])
+        // console.log(currentFilter[key])
         let result = str.match(currentFilter[key])
         if (result) {
+            currentLevel += 1
             console.log(result[0])
+            stringFilter(result[0], config, currentLevel)
         }
     }
 }
-stringFilter(a, regConfig)
+stringFilter(a, regConfig, currentLevel)
 
 
 //读取当前目录下后缀名为'.xlsx'的文件
 
+/*
 const fs = require('fs');
 
 const files = fs.readdirSync('./');
@@ -201,7 +208,7 @@ const result = files.filter(file => reg.test(file));
 
 // console.log(result);
 
-
+*/
 
 // 能匹配出冒号和逗号之间的部分
 // const levelSecondReg = {
