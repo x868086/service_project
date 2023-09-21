@@ -19,5 +19,8 @@
   "homepage": "https://github.com/x868086/service_project#readme",
   "devDependencies": {
     "jsdoc": "^4.0.2"
+  },
+  "dependencies": {
+    "exceljs": "^4.3.0"
   }
 }

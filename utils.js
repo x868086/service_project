@@ -1,8 +1,8 @@
 import { regConfig } from './reg-config.js'
 import fs from 'fs';
-//清洗字符串，去除AA，空格，逗号
+
 /**
- * 
+ * 清洗字符串，去除AA，空格，逗号
  * @param {string} str 
  * @returns {string}
  */
@@ -11,7 +11,7 @@ function stringClearn(str) {
 }
 
 /**
- * 
+ * 匹配出文本内容
  * @param {string} str 
  * @param {Array} regconfig 
  * @returns {Object}
@@ -29,6 +29,13 @@ function stringRegSummary(str, regconfig) {
     }
 }
 
+/**
+ * 根据指定的正则字典内容匹配内容
+ * @param {string} str 
+ * @param {number} level 
+ * @param {string} key 
+ * @returns {string}
+ */
 function stringRegCont(str, level, key) {
     if (level > regConfig.length) {
         return false
@@ -38,19 +45,33 @@ function stringRegCont(str, level, key) {
     return resultClear
 }
 
+
+
 //读取当前目录下后缀名为'.xlsx','.xls','.csv'的文件
 function readExcel() {
+    const files = fs.readdirSync('./excel-file/');
+
+    const reg = /((\.xls)$|(\.csv)$|(\.xlsx))$/;
+
+    // const result = files.filter((file) => {
+    //     console.log(file)
+    //     reg.test(file)
+    // })
+
+    const result = files.filter((file) => {
+        return reg.test(file)
+    })
+
+    console.log(result)
 
 
-
-    const files = fs.readdirSync('./');
-
-    const reg = /((\.xls)$|(\.csv)$|(\.xlsx))$/g;
-
-    const result = files.filter(file => reg.test(file))
-
-    console.log(result);
+    // console.log(result);
 }
+
+//写一段正则表达式规则，匹配.xls, .xlsx, .csv文件 
+// const reg = /((\.xls)$|(\.xlsx)$|(\.csv)$)/g;
+
+
 
 export {
     stringRegSummary, stringRegCont, readExcel
