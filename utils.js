@@ -51,7 +51,7 @@ function stringRegCont(str, level, key) {
 function readExcel() {
     const files = fs.readdirSync('./excel-file/');
 
-    const reg = /((\.xls)$|(\.csv)$|(\.xlsx))$/;
+    const reg = /((\.xls)$|(\.csv)$|(\.xlsx))$/g;
 
     // const result = files.filter((file) => {
     //     console.log(file)
@@ -59,7 +59,11 @@ function readExcel() {
     // })
 
     const result = files.filter((file) => {
-        return reg.test(file)
+        // console.log(file)
+        // return reg.test(file)
+        if (file.search(reg) > 1) {
+            return file.search(reg)
+        }
     })
 
     console.log(result)
