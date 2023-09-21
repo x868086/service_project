@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/x868086/service_project/issues"
   },
-  "homepage": "https://github.com/x868086/service_project#readme"
+  "homepage": "https://github.com/x868086/service_project#readme",
+  "devDependencies": {
+    "jsdoc": "^4.0.2"
+  }
 }

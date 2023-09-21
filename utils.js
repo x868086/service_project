@@ -1,10 +1,21 @@
 import { regConfig } from './reg-config.js'
 import fs from 'fs';
 //清洗字符串，去除AA，空格，逗号
+/**
+ * 
+ * @param {string} str 
+ * @returns {string}
+ */
 function stringClearn(str) {
     return str.replace(/AA|,|，|:|：|(\u0020)|(\u3000)/g, '')
 }
 
+/**
+ * 
+ * @param {string} str 
+ * @param {Array} regconfig 
+ * @returns {Object}
+ */
 function stringRegSummary(str, regconfig) {
     let regFilter = regconfig[0]
     for (let key in regFilter) {
