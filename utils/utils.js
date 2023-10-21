@@ -1,4 +1,4 @@
-import { regConfig } from './reg-config.js'
+import { regConfig } from '../configs/reg-config.js'
 import fs from 'fs';
 
 /**
@@ -18,29 +18,31 @@ function stringClearn(str) {
  */
 function stringRegSummary(str, regconfig) {
     let regFilter = regconfig[0]
-    for (let key in regFilter) {
-        let result = str.match(regFilter[key])
+    for (let [regKey, regExp] of Object.entries(regFilter)) {
+        let result = str.match(regExp)
         if (!!result) {
             return {
-                regTitle: key,
+                regTitle: regKey,
                 regContent: result[0]
             }
         }
+
+    }
+    return {
+        regTitle: null,
+        regContent: null
     }
 }
 
 /**
  * 根据指定的正则字典内容匹配内容
  * @param {string} str 
- * @param {number} level 
  * @param {string} key 
  * @returns {string}
  */
-function stringRegCont(str, level, key) {
-    if (level > regConfig.length) {
-        return false
-    }
-    let result = str.match(regConfig[level][key])
+
+function stringRegCont(str, key) {
+    let result = str.match(key)
     let resultClear = stringClearn(result[0])
     return resultClear
 }
