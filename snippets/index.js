@@ -100,6 +100,73 @@ worksheet.addRow({name: 'John Doe', DOB: new Date(1970,1,1)});
 
 
 
+//处理单个单元格
+const cell = worksheet.getCell('C3');
+cell.value = new Date(1968, 5, 1);
+
+cell.type //单元格类型
+Excel.ValueType //Excel中的所有类型
+
+// 使用单元格的字符串值
+myInput.value = cell.text;
+
+
+
+
+//读取excel
+// 从文件读取
+const workbook = new Excel.Workbook();
+await workbook.xlsx.readFile(filename);
+// ... 使用 workbook
+
+
+// 从流读取
+const workbook = new Excel.Workbook();
+await workbook.xlsx.read(stream);
+// ... 使用 workbook
+
+
+// 从 buffer 加载
+const workbook = new Excel.Workbook();
+await workbook.xlsx.load(data);
+// ... 使用 workbook
+
+
+// 写入文件
+const workbook = createAndFillWorkbook();
+await workbook.xlsx.writeFile(filename);
+
+// 写入流
+await workbook.xlsx.write(stream);
+
+// 写入 buffer
+const buffer = await workbook.xlsx.writeBuffer();
+
+
+
+//读取csv文件
+// 从文件读取
+const workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.readFile(filename);
+// ... 使用 workbook 或 worksheet
+
+
+// 从流中读取
+const workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.read(stream);
+// ... 使用 workbook 或 worksheet
+
+
+//写入csv文件
+// 写入文件
+const workbook = createAndFillWorkbook();
+await workbook.csv.writeFile(filename);
+
+// 写入流
+// 请注意，您需要提供 sheetName 或 sheetId 以正确导入到 csv
+await workbook.csv.write(stream, { sheetName: 'Page name' });
+
+
 */
 
 
