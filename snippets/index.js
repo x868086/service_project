@@ -7,6 +7,11 @@ workbook.views = [
     }
   ]
 
+
+// 创建一个新的Workbook
+// const workbook = new ExcelJS.Workbook();
+
+
 // 创建一个第一行和列冻结的工作表
 const sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 
@@ -178,15 +183,15 @@ import fs from 'fs';
 const workbook = new ExcelJS.Workbook();
 
 const worksheet = workbook.addWorksheet('My Sheet', {
-    properties: {
-        tabColor: { argb: 'FFaab00' },
-        views: [{ state: 'frozen', xSplit: 1, ySplit: 1 }]
-    }
+  properties: {
+    tabColor: { argb: 'FFaab00' },
+    views: [{ state: 'frozen', xSplit: 1, ySplit: 1 }]
+  }
 });
 
 worksheet.columns = [
-    { header: 'Name', key: 'name', width: 32, outlineLevel: 0 },
-    { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
+  { header: 'Name', key: 'name', width: 32, outlineLevel: 0 },
+  { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
 ];
 
 worksheet.getColumn(5).values = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -196,18 +201,18 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 let row = worksheet.getRow(6)
 row.values = {
-    name: 'aaa',
-    DOB: 'bbb'
+  name: 'aaa',
+  DOB: 'bbb'
 }
 
 worksheet.addRow({ name: 'Jane Doe1', DOB: new Date(1965, 1, 7) });
 
 worksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
-    console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
+  console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
 });
 
 row.eachCell({ includeEmpty: true }, function (cell, colNumber) {
-    console.log('Cell ' + colNumber + ' = ' + cell.value);
+  console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
 row.commit();
@@ -216,10 +221,10 @@ row.commit();
 
 
 workbook.xlsx.writeFile('./excel-file/output.xlsx')
-    .then(() => {
-        console.log('File saved successfully.');
-    })
-    .catch(error => {
-        console.error('Error saving the file:', error);
-    });
+  .then(() => {
+    console.log('File saved successfully.');
+  })
+  .catch(error => {
+    console.error('Error saving the file:', error);
+  });
 

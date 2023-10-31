@@ -5,24 +5,78 @@ import fs from 'fs';
 
 import ExcelJS from 'exceljs';
 const workbook = new ExcelJS.Workbook();
-function readExcelFile(filepath) {
-  fs.readdir(filepath, (err, files) => {
-    if (err) {
-      console.error('Error reading directory:', err);
-      throw err
-    }
+/**
+ * Reads an Excel file from the specified filepath and returns an array of Excel files.
+ *
+ * @param {string} filepath - The path to the directory containing the Excel files.
+ * @return {array} An array of Excel files.
+ */
 
-    const excelFiles = files.filter(file => path.extname(file) === '.xlsx' || path.extname(file) === '.xls');
-
-    console.log('Excel files in the directory:');
-    excelFiles.forEach(file => {
-      console.log(file);
+/**
+ * Reads an Excel file from the specified filepath and returns an array of Excel files.
+ *
+ * @param {string} filepath - The path to the directory containing the Excel files.
+ * @return {array} An array of Excel files.
+ */
+function readDirPath(filepath) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(filepath, (err, files) => {
+      if (err) {
+        console.error('Error reading directory:', err);
+        reject(err)
+      } else {
+        const excelFiles = files.filter(file => path.extname(file) === '.xlsx' || path.extname(file) === '.xls' || path.extname(file) === '.csv');
+        resolve(excelFiles)
+      }
     });
-  });
+  })
 }
 
+
+
+/**
+ * Reads an Excel file from a given filepath.
+ *
+ * @param {string} filepath - The path to the Excel file.
+ * @return {undefined} This function does not return a value.
+ */
+function readExcelStream(filepath) {
+  fs.createReadStream(filepath)
+    // .pipe(workbook.xlsx.createInputStream())
+    .on('data', chunk => {
+      // 处理每个数据块
+      console.log('Received', chunk.length, 'bytes of data.');
+    })
+    .on('end', () => {
+      console.log(`读取文件结束，文件路径为${filepath}`);
+    })
+    .on('error', error => {
+      throw new Error(`读取文件错误${error}`)
+    })
+
+  const workbook = new ExcelJS.stream.xlsx.WorkbookReader(filepath);
+  for await (const worksheetReader of workbookReader) {
+    for await (const row of worksheetReader) {
+      console.log(row)
+    }
+  }
+}
+
+
+function getWorkSheet(workbook,) {
+  workbook.xlsx.read(stream)
+  // const worksheet = workbook.getWorksheet('My Sheet');
+  // workbook.eachSheet(function(worksheet, sheetId) {
+  //   console.log(worksheet,sheetId)
+  // });
+
+}
+
+
+
 export {
-  readExcelFile
+  readDirPath,
+  readExcelStream
 }
 
 

@@ -18,7 +18,7 @@ const excelPath = path.join(__dirname, configs.excelFilePath)
 
 import { regInfo, regConfig } from './configs/reg-config.js'
 import { stringRegSummary, stringRegCont, readExcel } from './utils/utils.js'
-import { readExcelFile } from './excel-utils/excel-methods.js'
+import { readDirPath, readExcelStream } from './excel-utils/excel-methods.js'
 
 
 let a = 'Q23： 枝江市铭沃合作营业厅 ，1000M宽带提速包（30元）（湖北）AA，经核查属营业厅2023-05-31 10:10:52赠送1000M宽带提速包（30元）（湖北）和399组网套包得180元分6个月（组网优惠）（湖北）业务，免费6个月，赠费合约内未产生扣费，现已为客户解释处理，已取消提速包业务，用户满意'
@@ -45,7 +45,16 @@ let regContentResult = regFilter.map((e, i, a) => {
 
 // console.log(regContentResult)
 
-readExcelFile(excelPath)
+readDirPath(excelPath).then((files) => {
+    console.log(files)
+    let filepath = path.join(excelPath, files[0])
+    readExcelStream(filepath)
+}).catch(err => {
+    throw new Error(`读取excel文件目录出错${err}`)
+})
+
+// readStreamFile(fileList[0])
+
 
 
 
