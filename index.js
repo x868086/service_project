@@ -1,5 +1,24 @@
+import fs from 'fs';
+import path from 'path';
+
+
+import configs from './configs/config.js'
+/**
+ * 在 ES 模块中，__dirname 并不是一个预定义的变量。可以使用 import.meta.url 结合 Node.js 的 path 模块来获取当前模块的目录路径。
+ * 使用 import.meta.url 获取当前模块的文件 URL，然后使用 fileURLToPath() 方法将其转换为文件路径。
+ * 接下来，我们使用 dirname() 方法获取文件路径的目录路径，并将其赋值给 __dirname 变量。最后，我们在控制台输出 __dirname。
+ */
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+console.log(__dirname);
+const excelPath = path.join(__dirname, configs.excelFilePath)
+
+
 import { regInfo, regConfig } from './configs/reg-config.js'
 import { stringRegSummary, stringRegCont, readExcel } from './utils/utils.js'
+import { readExcelFile } from './excel-utils/excel-methods.js'
 
 
 let a = 'Q23： 枝江市铭沃合作营业厅 ，1000M宽带提速包（30元）（湖北）AA，经核查属营业厅2023-05-31 10:10:52赠送1000M宽带提速包（30元）（湖北）和399组网套包得180元分6个月（组网优惠）（湖北）业务，免费6个月，赠费合约内未产生扣费，现已为客户解释处理，已取消提速包业务，用户满意'
@@ -24,9 +43,9 @@ let regContentResult = regFilter.map((e, i, a) => {
     return stringRegCont(regContent, value)
 })
 
-console.log(regContentResult)
+// console.log(regContentResult)
 
-// readExcel()
+readExcelFile(excelPath)
 
 
 

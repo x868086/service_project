@@ -1,34 +1,59 @@
-//下面是一个简单的示例代码，演示了如何使用exceljs读取和写入Excel文件中的单元格内容。
-
-import ExcelJS from 'exceljs';
+import path from 'path';
 import fs from 'fs';
 
-// 创建一个新的Workbook
+
+
+import ExcelJS from 'exceljs';
 const workbook = new ExcelJS.Workbook();
+function readExcelFile(filepath) {
+  fs.readdir(filepath, (err, files) => {
+    if (err) {
+      console.error('Error reading directory:', err);
+      throw err
+    }
+
+    const excelFiles = files.filter(file => path.extname(file) === '.xlsx' || path.extname(file) === '.xls');
+
+    console.log('Excel files in the directory:');
+    excelFiles.forEach(file => {
+      console.log(file);
+    });
+  });
+}
+
+export {
+  readExcelFile
+}
+
+
+
+
+// 创建一个新的Workbook
+// const workbook = new ExcelJS.Workbook();
 
 // 1. 读取Excel文件
-fs.createReadStream('example.xlsx')
-    .pipe(workbook.xlsx.createInputStream())
-    .on('data', chunk => {
-        // 处理每个数据块
-        console.log('Received', chunk.length, 'bytes of data.');
-    })
-    .on('end', () => {
-        console.log('Finished reading the file.');
-    });
+// fs.createReadStream(excelPath)
+//   // .pipe(workbook.xlsx.createInputStream())
+//   .on('data', chunk => {
+//     // 处理每个数据块
+//     console.log('Received', chunk.length, 'bytes of data.');
+//   })
+//   .on('end', () => {
+//     console.log('Finished reading the file.');
+//   });
 
 // 2. 写入Excel文件
-const worksheet = workbook.addWorksheet('Sheet1');
-worksheet.getCell('A1').value = 'Hello, World!';
+// const worksheet = workbook.addWorksheet('Sheet1');
+// worksheet.getCell('A1').value = 'Hello, World!';
 
-// 保存到文件
-workbook.xlsx.writeFile('output.xlsx')
-    .then(() => {
-        console.log('File saved successfully.');
-    })
-    .catch(error => {
-        console.error('Error saving the file:', error);
-    });
+// // 保存到文件
+// workbook.xlsx.writeFile('output.xlsx')
+//     .then(() => {
+//         console.log('File saved successfully.');
+//     })
+//     .catch(error => {
+//         console.error('Error saving the file:', error);
+//     });
 
 /**
  * 在这个示例中，我们首先创建了一个新的Workbook对象，然后使用流来读取Excel文件的内容。接着，我们添加一个新的工作表，并向单元格写入内容。最后，我们将工作簿保存到一个新文件。
