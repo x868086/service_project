@@ -17,6 +17,12 @@ function stringClearn(str) {
  * @returns {Object}
  */
 function stringRegSummary(str, regconfig) {
+    if (!str) {
+        return {
+            regTitle: null,
+            regContent: null
+        }
+    }
     let regFilter = regconfig[0]
     for (let [regKey, regExp] of Object.entries(regFilter)) {
         let result = str.match(regExp)

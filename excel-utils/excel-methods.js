@@ -5,7 +5,14 @@ import { createReadStream } from 'fs';
 import { createInterface } from 'readline';
 
 import ExcelJS from 'exceljs';
-// const workbook = new ExcelJS.Workbook();
+
+
+import { regInfo, regConfig } from '../configs/reg-config.js'
+import { stringRegSummary, stringRegCont, readExcel } from '../utils/utils.js'
+
+
+
+
 /**
  * Reads an Excel file from the specified filepath and returns an array of Excel files.
  *
@@ -34,89 +41,163 @@ function readDirPath(filepath) {
 }
 
 
-
-/**
- * Reads an Excel file from a given filepath.
- *
- * @param {string} filepath - The path to the Excel file.
- * @return {undefined} This function does not return a value.
- */
+// Nodejs数据流读取方法
 async function readExcelStream(filepath) {
-  // fs.createReadStream(filepath)
-  //   // .pipe(workbook.xlsx.createInputStream())
-  //   .on('data', chunk => {
-  //     // 处理每个数据块
-  //     console.log('Received', chunk.length, 'bytes of data.');
-  //   })
-  //   .on('end', () => {
-  //     console.log(`读取文件结束，文件路径为${filepath}`);
-  //   })
-  //   .on('error', error => {
-  //     throw new Error(`读取文件错误${error}`)
-  //   })
+  const workbook = new ExcelJS.Workbook();
+  const stream = fs.createReadStream(filepath);
+  stream.on('data', chunk => {
+    // 处理每个数据块
+    console.log('Received', chunk.length, 'bytes of data.');
+  })
+  stream.on('end', () => {
+    console.log(`读取文件结束，文件路径为${filepath}`);
+  })
+  stream.on('error', error => {
+    throw new Error(`读取文件错误${error}`)
+  })
 
+  await workbook.xlsx.read(stream);
 
-  const workbook = new ExcelJS.stream.xlsx.WorkbookReader(filepath);
-
-
-
-
-  workbook.on('worksheet', async (worksheet) => {
-    if (worksheet.name === 'foo') {
-      worksheet.on('row', async (row) => {
-
-        if (row.number === 1) {
-          const headers = row.values;
-          console.log(headers);
-        }
-        // let abc = workbook.sharedStrings[25]
-        // let b = row.getCell(1).value
-        // console.log(b)
-
-
-
-        // let abc = workbook.sharedStrings[25]
-        // row.eachCell((cell, num) => {
-        //   console.log(cell, num)
-        // })
-        // console.log(worksheet.columns)
-        // const cellC = row.getCell(2)
-        // let a = cellC.value
-        // let b = cellC.text
-        // console.log(cellC.value);
-        // console.log(cellC.text);
-      })
-
-    }
-    // worksheet.on('row', row => {
-    //   console.log(row)
-    // });
-    // console.log(worksheet.workbook.eachSheet)
-
-    // let abc = worksheet.getColumn('处理结果')
-  });
-
-
-  workbook.read()
-  // await workbook.read()
-}
-
-
-
-function getWorkSheet(workbook,) {
-  workbook.xlsx.read(stream)
+  // 单独读取某个表格，需要改写？？？？？？？？？？？？？？
   // const worksheet = workbook.getWorksheet('My Sheet');
   // workbook.eachSheet(function(worksheet, sheetId) {
   //   console.log(worksheet,sheetId)
   // });
 
+  const worksheet = workbook.getWorksheet('foo');
+  return worksheet
 }
+
+// exceljs数据流原生方法
+// function readExcelStream(filepath) {
+//   return new Promise((resolve, reject) => {
+//     const workbook = new ExcelJS.stream.xlsx.WorkbookReader(filepath);
+
+//     workbook.on('worksheet', (worksheet) => {
+//       if (worksheet.name === 'foo') {
+//         const tableHeader = []
+//         worksheet.on('row', (row) => {
+//           if (row.number === 1) {
+//             // const headers = row.values;
+//             // tableHeader.push(headers)
+//             // resolve(tableHeader)
+//             row.eachCell((cell) => {
+//               tableHeader.push(cell.value);
+//               console.log(cell.address)
+//               console.log(cell.value)
+//             });
+//             resolve(tableHeader)
+//           }
+//           // console.log(row.values)
+//         })
+//       }
+//     })
+//     workbook.read()
+//   })
+// }
+
+// /**
+//  * Reads an Excel file from a given filepath.
+//  *
+//  * @param {string} filepath - The path to the Excel file.
+//  * @return {undefined} This function does not return a value.
+//  */
+// async function readExcelStream(filepath) {
+//   // fs.createReadStream(filepath)
+//   //   // .pipe(workbook.xlsx.createInputStream())
+//   //   .on('data', chunk => {
+//   //     // 处理每个数据块
+//   //     console.log('Received', chunk.length, 'bytes of data.');
+//   //   })
+//   //   .on('end', () => {
+//   //     console.log(`读取文件结束，文件路径为${filepath}`);
+//   //   })
+//   //   .on('error', error => {
+//   //     throw new Error(`读取文件错误${error}`)
+//   //   })
+
+//   const workbook = new ExcelJS.stream.xlsx.WorkbookReader(filepath);
+
+//   workbook.on('worksheet', async (worksheet) => {
+//     if (worksheet.name === 'foo') {
+//       worksheet.on('row', async (row) => {
+
+//         if (row.number === 1) {
+//           const headers = row.values;
+//           console.log(headers);
+//         }
+//         // console.log(worksheet.columns)
+//         // const cellC = row.getCell(2)
+//         // let a = cellC.value
+//       })
+
+//     }
+//   });
+//   workbook.read()
+//   // await workbook.read()
+// }
+
+
+
+
+
+async function getHeaderCol(cellName, worksheet) {
+  const headers = [];
+  worksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
+    if (rowNumber === 1) {
+      row.eachCell({ includeEmpty: false }, (cell) => {
+        headers.push({
+          value: cell.value,
+          address: cell.address
+        });
+      });
+    }
+  });
+
+  let colFlag = headers.find((e, i, a) => e.value === cellName).address.replace(/\d+/g, '')
+  const colContent = worksheet.getColumn(colFlag)
+  return colContent
+}
+
+async function getEachCell(colContent) {
+  colContent.eachCell({ includeEmpty: true }, function (cell, rowNumber) {
+    // console.log(cell.value, cell.address, rowNumber)
+
+
+
+    let { regTitle, regContent } = stringRegSummary(cell.value, regConfig)
+
+
+    let regFilter = regConfig.map((element, index, arr) => {
+      return Object.entries(element)
+    }).map((element, index, arr) => {
+      return element.filter(e => {
+        let [key, value] = e
+        return key === regTitle
+      })
+    }).flat()
+
+    let regContentResult = regFilter.map((e, i, a) => {
+      let [key, value] = e
+      return stringRegCont(regContent, value)
+    })
+
+    console.log(regContentResult)
+
+  });
+}
+
+
+
+
 
 
 
 export {
   readDirPath,
-  readExcelStream
+  readExcelStream,
+  getHeaderCol,
+  getEachCell
 }
 
 
