@@ -1,10 +1,11 @@
 import path from 'path';
 import fs from 'fs';
 
-
+import { createReadStream } from 'fs';
+import { createInterface } from 'readline';
 
 import ExcelJS from 'exceljs';
-const workbook = new ExcelJS.Workbook();
+// const workbook = new ExcelJS.Workbook();
 /**
  * Reads an Excel file from the specified filepath and returns an array of Excel files.
  *
@@ -40,27 +41,66 @@ function readDirPath(filepath) {
  * @param {string} filepath - The path to the Excel file.
  * @return {undefined} This function does not return a value.
  */
-function readExcelStream(filepath) {
-  fs.createReadStream(filepath)
-    // .pipe(workbook.xlsx.createInputStream())
-    .on('data', chunk => {
-      // 处理每个数据块
-      console.log('Received', chunk.length, 'bytes of data.');
-    })
-    .on('end', () => {
-      console.log(`读取文件结束，文件路径为${filepath}`);
-    })
-    .on('error', error => {
-      throw new Error(`读取文件错误${error}`)
-    })
+async function readExcelStream(filepath) {
+  // fs.createReadStream(filepath)
+  //   // .pipe(workbook.xlsx.createInputStream())
+  //   .on('data', chunk => {
+  //     // 处理每个数据块
+  //     console.log('Received', chunk.length, 'bytes of data.');
+  //   })
+  //   .on('end', () => {
+  //     console.log(`读取文件结束，文件路径为${filepath}`);
+  //   })
+  //   .on('error', error => {
+  //     throw new Error(`读取文件错误${error}`)
+  //   })
+
 
   const workbook = new ExcelJS.stream.xlsx.WorkbookReader(filepath);
-  for await (const worksheetReader of workbookReader) {
-    for await (const row of worksheetReader) {
-      console.log(row)
+
+
+
+
+  workbook.on('worksheet', async (worksheet) => {
+    if (worksheet.name === 'foo') {
+      worksheet.on('row', async (row) => {
+
+        if (row.number === 1) {
+          const headers = row.values;
+          console.log(headers);
+        }
+        // let abc = workbook.sharedStrings[25]
+        // let b = row.getCell(1).value
+        // console.log(b)
+
+
+
+        // let abc = workbook.sharedStrings[25]
+        // row.eachCell((cell, num) => {
+        //   console.log(cell, num)
+        // })
+        // console.log(worksheet.columns)
+        // const cellC = row.getCell(2)
+        // let a = cellC.value
+        // let b = cellC.text
+        // console.log(cellC.value);
+        // console.log(cellC.text);
+      })
+
     }
-  }
+    // worksheet.on('row', row => {
+    //   console.log(row)
+    // });
+    // console.log(worksheet.workbook.eachSheet)
+
+    // let abc = worksheet.getColumn('处理结果')
+  });
+
+
+  workbook.read()
+  // await workbook.read()
 }
+
 
 
 function getWorkSheet(workbook,) {
