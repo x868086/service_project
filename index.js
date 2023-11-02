@@ -62,12 +62,13 @@ async function rollup(excelPath) {
 
 }
 
-try {
-    rollup(excelPath)
-} catch (err) {
-    throw new Error(`读取excel文件目录出错${err}`)
-}
 
+
+
+
+rollup(excelPath).catch(err => {
+    throw new Error(`读取excel文件目录出错${err}`)
+})
 
 
 
