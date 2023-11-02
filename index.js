@@ -18,34 +18,35 @@ const excelPath = path.join(__dirname, configs.excelFilePath)
 import { readDirPath, readExcelStream, getHeaderCol, getEachCell } from './excel-utils/excel-methods.js'
 
 
-import { regInfo, regConfig } from './configs/reg-config.js'
-import { stringRegSummary, stringRegCont, readExcel } from './utils/utils.js'
+// import { regInfo, regConfig } from './configs/reg-config.js'
+// import { stringRegSummary, stringRegCont, readExcel } from './utils/utils.js'
 
 
 
-let a = 'Q23： 枝江市铭沃合作营业厅 ，1000M宽带提速包（30元）（湖北）AA，经核查属营业厅2023-05-31 10:10:52赠送1000M宽带提速包（30元）（湖北）和399组网套包得180元分6个月（组网优惠）（湖北）业务，免费6个月，赠费合约内未产生扣费，现已为客户解释处理，已取消提速包业务，用户满意'
-let b = 'Q23： 城区高新区东山花园自营厅   经核实2023-03-17 16:58:44 城区高新区东山花园自营厅 给客户办理融合宽带071703854185。现客户表示无需使用，客服部已操作取消，并转资畅越冰激凌5G套餐199元（极速）+ 网龄计划合约 ，次月生效，满意。'
-let c = null
+// let a = 'Q23： 枝江市铭沃合作营业厅 ，1000M宽带提速包（30元）（湖北）AA，经核查属营业厅2023-05-31 10:10:52赠送1000M宽带提速包（30元）（湖北）和399组网套包得180元分6个月（组网优惠）（湖北）业务，免费6个月，赠费合约内未产生扣费，现已为客户解释处理，已取消提速包业务，用户满意'
+// let b = 'Q23： 城区高新区东山花园自营厅   经核实2023-03-17 16:58:44 城区高新区东山花园自营厅 给客户办理融合宽带071703854185。现客户表示无需使用，客服部已操作取消，并转资畅越冰激凌5G套餐199元（极速）+ 网龄计划合约 ，次月生效，满意。'
+// let c = null
+// let d = '解释宣传：城区东山大道国贸自有营业厅AA，用户反馈办理低消宽带时解释宣传错误，核实营业厅开通宽带时勾选1年赠费，于23.6月到期，故7月起每月产生10元费用，考虑客户感知，现申请减免1年宽带费用合计120元，退至宽带私有账户，24小时内到账，此费用不可打印账单发票，回访满意'
 
 
-let { regTitle, regContent } = stringRegSummary(c, regConfig)
+// let { regTitle, regContent } = stringRegSummary(d, regConfig)
 
 
-let regFilter = regConfig.map((element, index, arr) => {
-    return Object.entries(element)
-}).map((element, index, arr) => {
-    return element.filter(e => {
-        let [key, value] = e
-        return key === regTitle
-    })
-}).flat()
+// let regFilter = regConfig.map((element, index, arr) => {
+//     return Object.entries(element)
+// }).map((element, index, arr) => {
+//     return element.filter(e => {
+//         let [key, value] = e
+//         return key === regTitle
+//     })
+// }).flat()
 
-let regContentResult = regFilter.map((e, i, a) => {
-    let [key, value] = e
-    return stringRegCont(regContent, value)
-})
+// let regContentResult = regFilter.map((e, i, a) => {
+//     let [key, value] = e
+//     return stringRegCont(regContent, value)
+// })
 
-console.log(regContentResult)
+// console.log(regContentResult)
 
 
 
@@ -61,11 +62,11 @@ async function rollup(excelPath) {
 
 }
 
-// try {
-//     rollup(excelPath)
-// } catch (err) {
-//     throw new Error(`读取excel文件目录出错${err}`)
-// }
+try {
+    rollup(excelPath)
+} catch (err) {
+    throw new Error(`读取excel文件目录出错${err}`)
+}
 
 
 

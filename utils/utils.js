@@ -49,8 +49,13 @@ function stringRegSummary(str, regconfig) {
 
 function stringRegCont(str, key) {
     let result = str.match(key)
-    let resultClear = stringClearn(result[0])
-    return resultClear
+    if (result) {
+        let resultClear = stringClearn(result[0])
+        return resultClear
+    } else {
+        return ''
+    }
+
 }
 
 

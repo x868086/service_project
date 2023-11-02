@@ -19,13 +19,6 @@ import { stringRegSummary, stringRegCont, readExcel } from '../utils/utils.js'
  * @param {string} filepath - The path to the directory containing the Excel files.
  * @return {array} An array of Excel files.
  */
-
-/**
- * Reads an Excel file from the specified filepath and returns an array of Excel files.
- *
- * @param {string} filepath - The path to the directory containing the Excel files.
- * @return {array} An array of Excel files.
- */
 function readDirPath(filepath) {
   return new Promise((resolve, reject) => {
     fs.readdir(filepath, (err, files) => {
@@ -147,7 +140,7 @@ async function getHeaderCol(cellName, worksheet) {
     if (rowNumber === 1) {
       row.eachCell({ includeEmpty: false }, (cell) => {
         headers.push({
-          value: cell.value,
+          value: cell.text,
           address: cell.address
         });
       });
@@ -161,11 +154,11 @@ async function getHeaderCol(cellName, worksheet) {
 
 async function getEachCell(colContent) {
   colContent.eachCell({ includeEmpty: true }, function (cell, rowNumber) {
-    // console.log(cell.value, cell.address, rowNumber)
+    console.log(cell.value, cell.text, cell.address, rowNumber)
 
 
 
-    let { regTitle, regContent } = stringRegSummary(cell.value, regConfig)
+    let { regTitle, regContent } = stringRegSummary(cell.text, regConfig)
 
 
     let regFilter = regConfig.map((element, index, arr) => {

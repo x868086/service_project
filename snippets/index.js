@@ -228,3 +228,42 @@ workbook.xlsx.writeFile('./excel-file/output.xlsx')
     console.error('Error saving the file:', error);
   });
 
+
+
+// 读取单元格格式
+/**
+* ExcelJS.ValueType
+  Boolean:
+  9
+  Date:
+  4
+  Error:
+  10
+  Formula:
+  6
+  Hyperlink:
+  5
+  Merge:
+  1
+  Null:
+  0
+  Number:
+  2
+  RichText:
+  8
+  SharedString:
+  7
+  String:
+  3
+*/
+switch (cell.type) {
+  case 3:
+    val = cell.value
+    break;
+  case 8:
+    val = cell.value.richText[0].text
+    break;
+  default:
+    val = cell.value
+    break;
+}

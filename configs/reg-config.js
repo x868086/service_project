@@ -19,19 +19,19 @@ export const regInfo = {
 
 export const regConfig = [
     {
-        salesDispute: /电话营销-开通争议((\uFF1A)|(:)).+AA/g,
-        salesExplanation: /电话营销-解释宣传((\uFF1A)|(:)).+AA/g,
-        salesAmiss: /电话营销-工作差错((\uFF1A)|(:)).+AA/g,
-        salesService: /电话营销-服务态度((\uFF1A)|(:)).+AA/g,
-        jobAmiss: /工作差错((\uFF1A)|(:)).+AA/g,
-        explainationAmiss: /解释宣传((\uFF1A)|(:)).+AA/g,
-        serviceAttitude: /服务态度((\uFF1A)|(:)).+AA/g,
-        deliveryDispute: /配送争议((\uFF1A)|(:)).+AA/g,
-        serviceStop: /号码关停((\uFF1A)|(:)).+AA/g,
-        mobileService: /网络质量((\uFF1A)|(:)).+AA/g,
-        broadbandService: /固网质量((\uFF1A)|(:)).+AA/g,
-        broadbandInstallation: /(宽带安装|资源)((\uFF1A)|(:)).+AA/g,
-        qEvent: /(^Q21|Q22|Q23)((\uFF1A)|(:)).+AA/g
+        salesDispute: /电话营销-开通争议((\uFF1A)|:).+AA/g,
+        salesExplanation: /电话营销-解释宣传((\uFF1A)|:).+AA/g,
+        salesAmiss: /电话营销-工作差错((\uFF1A)|:).+AA/g,
+        salesService: /电话营销-服务态度((\uFF1A)|:).+AA/g,
+        jobAmiss: /工作差错((\uFF1A)|:).+AA/g,
+        explainationAmiss: /解释宣传((\uFF1A)|:).+AA/g,
+        serviceAttitude: /服务态度((\uFF1A)|:).+AA/g,
+        deliveryDispute: /配送争议((\uFF1A)|:).+AA/g,
+        serviceStop: /号码关停((\uFF1A)|:).+AA/g,
+        mobileService: /网络质量((\uFF1A)|:).+AA/g,
+        broadbandService: /固网质量((\uFF1A)|:).+AA/g,
+        broadbandInstallation: /(宽带安装|资源)((\uFF1A)|:).+AA/g,
+        qEvent: /(^Q21|Q22|Q23)((\uFF1A)|:).+AA/g
     },
     {
         salesDispute: /^电话营销-开通争议/g,
@@ -49,38 +49,104 @@ export const regConfig = [
         qEvent: /(^Q21|Q22|Q23)/g
     },
     {
-        salesDispute: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
-        salesExplanation: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
-        salesAmiss: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
-        salesService: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
-        jobAmiss: /((\uFF1A)|(:)).+AA/g,
-        explainationAmiss: /((\uFF1A)|(:)).+AA/g,
-        serviceAttitude: /((\uFF1A)|(:)).+AA/g,
-        deliveryDispute: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
-        serviceStop: /((\uFF1A)|(:)).+AA/g,
-        mobileService: /((\uFF1A)|(:)).+AA/g,
-        broadbandService: /((\uFF1A)|(:)).+AA/g,
-        broadbandInstallation: /((\uFF1A)|(:)).+AA/g,
-        qEvent: /((\uFF1A)|(:)).*(\uFF0C|,)/g
+        salesDispute: /((\uFF1A)|:).*(\uFF0C|,)/g,
+        salesExplanation: /((\uFF1A)|:).*(\uFF0C|,)/g,
+        salesAmiss: /((\uFF1A)|:).*(\uFF0C|,)/g,
+        salesService: /((\uFF1A)|:).*(\uFF0C|,)/g,
+        jobAmiss: /((\uFF1A)|:).+AA/g,
+        explainationAmiss: /((\uFF1A)|:).+AA/g,
+        serviceAttitude: /((\uFF1A)|:).+AA/g,
+        deliveryDispute: /((\uFF1A)|:).*(\uFF0C|,)/g,
+        serviceStop: /((\uFF1A)|:).+AA/g,
+        mobileService: /((\uFF1A)|:).+AA/g,
+        broadbandService: /((\uFF1A)|:).+AA/g,
+        broadbandInstallation: /((\uFF1A)|:).+AA/g,
+        qEvent: /((\uFF1A)|:).*(\uFF0C|,)/g
     },
     {
-        salesDispute: /((\uFF0C)|(,)).+AA/g,
-        salesExplanation: /((\uFF0C)|(,)).+AA/g,
-        salesAmiss: /((\uFF0C)|(,)).+AA/g,
-        salesService: /((\uFF0C)|(,)).+AA/g,
-        jobAmiss: null,
-        explainationAmiss: null,
-        serviceAttitude: null,
-        deliveryDispute: null,
-        serviceStop: null,
-        mobileService: null,
-        broadbandService: null,
-        broadbandInstallation: null,
-        qEvent: /((\uFF0C)|(,)).+AA/g
+        salesDispute: /((\uFF0C)|,).+AA/g,
+        salesExplanation: /((\uFF0C)|,).+AA/g,
+        salesAmiss: /((\uFF0C)|,).+AA/g,
+        salesService: /((\uFF0C)|,).+AA/g,
+        jobAmiss: /((\uFF0C)|,).+AA/g,
+        explainationAmiss: /((\uFF0C)|,).+AA/g,
+        serviceAttitude: /((\uFF0C)|,).+AA/g,
+        deliveryDispute: /((\uFF0C)|,).+AA/g,
+        serviceStop: /((\uFF0C)|,).+AA/g,
+        mobileService: /((\uFF0C)|,).+AA/g,
+        broadbandService: /((\uFF0C)|,).+AA/g,
+        broadbandInstallation: /((\uFF0C)|,).+AA/g,
+        qEvent: /((\uFF0C)|,).+AA/g
     },
 ]
 
 
+
+
+
+
+// export const regConfig = [
+//     {
+//         salesDispute: /电话营销-开通争议((\uFF1A)|(:)).+AA/g,
+//         salesExplanation: /电话营销-解释宣传((\uFF1A)|(:)).+AA/g,
+//         salesAmiss: /电话营销-工作差错((\uFF1A)|(:)).+AA/g,
+//         salesService: /电话营销-服务态度((\uFF1A)|(:)).+AA/g,
+//         jobAmiss: /工作差错((\uFF1A)|(:)).+AA/g,
+//         explainationAmiss: /解释宣传((\uFF1A)|(:)).+AA/g,
+//         serviceAttitude: /服务态度((\uFF1A)|(:)).+AA/g,
+//         deliveryDispute: /配送争议((\uFF1A)|(:)).+AA/g,
+//         serviceStop: /号码关停((\uFF1A)|(:)).+AA/g,
+//         mobileService: /网络质量((\uFF1A)|(:)).+AA/g,
+//         broadbandService: /固网质量((\uFF1A)|(:)).+AA/g,
+//         broadbandInstallation: /(宽带安装|资源)((\uFF1A)|(:)).+AA/g,
+//         qEvent: /(^Q21|Q22|Q23)((\uFF1A)|(:)).+AA/g
+//     },
+//     {
+//         salesDispute: /^电话营销-开通争议/g,
+//         salesExplanation: /^电话营销-解释宣传/g,
+//         salesAmiss: /^电话营销-工作差错/g,
+//         salesService: /^电话营销-服务态度/g,
+//         jobAmiss: /^工作差错/g,
+//         explainationAmiss: /^解释宣传/g,
+//         serviceAttitude: /^服务态度/g,
+//         deliveryDispute: /^配送争议/g,
+//         serviceStop: /^号码关停/g,
+//         mobileService: /^网络质量/g,
+//         broadbandService: /^固网质量/g,
+//         broadbandInstallation: /(^宽带安装|^资源)/g,
+//         qEvent: /(^Q21|Q22|Q23)/g
+//     },
+//     {
+//         salesDispute: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
+//         salesExplanation: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
+//         salesAmiss: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
+//         salesService: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
+//         jobAmiss: /((\uFF1A)|(:)).+AA/g,
+//         explainationAmiss: /((\uFF1A)|(:)).+AA/g,
+//         serviceAttitude: /((\uFF1A)|(:)).+AA/g,
+//         deliveryDispute: /((\uFF1A)|(:)).*(\uFF0C|,)/g,
+//         serviceStop: /((\uFF1A)|(:)).+AA/g,
+//         mobileService: /((\uFF1A)|(:)).+AA/g,
+//         broadbandService: /((\uFF1A)|(:)).+AA/g,
+//         broadbandInstallation: /((\uFF1A)|(:)).+AA/g,
+//         qEvent: /((\uFF1A)|(:)).*(\uFF0C|,)/g
+//     },
+//     {
+//         salesDispute: /((\uFF0C)|(,)).+AA/g,
+//         salesExplanation: /((\uFF0C)|(,)).+AA/g,
+//         salesAmiss: /((\uFF0C)|(,)).+AA/g,
+//         salesService: /((\uFF0C)|(,)).+AA/g,
+//         jobAmiss: null,
+//         explainationAmiss: null,
+//         serviceAttitude: null,
+//         deliveryDispute: null,
+//         serviceStop: null,
+//         mobileService: null,
+//         broadbandService: null,
+//         broadbandInstallation: null,
+//         qEvent: /((\uFF0C)|(,)).+AA/g
+//     },
+// ]
 
 
 // 匹配中文全角逗号的正则表达式：
