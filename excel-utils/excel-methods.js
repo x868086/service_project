@@ -138,12 +138,22 @@ async function getHeaderCol(cellName, worksheet) {
   const headers = [];
   worksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
     if (rowNumber === 1) {
-      row.eachCell({ includeEmpty: false }, (cell) => {
+      row.eachCell({ includeEmpty: true }, (cell) => {
         headers.push({
           value: cell.text,
           address: cell.address
         });
       });
+      // 读取正则配置文件，确定要拆分成多少列
+      let addColums = []
+      for (var i = 0; i <= regConfig.length; i++) {
+        addColums.push({
+          header: `拆分${i}`,
+          key: `field{i}`
+        })
+      }
+      // 添加列标题
+      worksheet.columns = [...worksheet.columns, ...addColums];
     }
   });
 
