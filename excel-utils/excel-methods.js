@@ -134,7 +134,7 @@ async function readExcelStream(filepath) {
 
 
 
-async function getHeaderCol(cellName, worksheet) {
+async function getHeaderCol(worksheet) {
   const headers = [];
   worksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
     if (rowNumber === 1) {
@@ -156,7 +156,14 @@ async function getHeaderCol(cellName, worksheet) {
       worksheet.columns = [...worksheet.columns, ...addColums];
     }
   });
+  return headers
 
+  // let colFlag = headers.find((e, i, a) => e.value === cellName).address.replace(/\d+/g, '')
+  // const colContent = worksheet.getColumn(colFlag)
+  // return colContent
+}
+
+async function getTargetCol(headers, cellName, worksheet) {
   let colFlag = headers.find((e, i, a) => e.value === cellName).address.replace(/\d+/g, '')
   const colContent = worksheet.getColumn(colFlag)
   return colContent
@@ -186,8 +193,13 @@ async function getEachCell(colContent) {
     })
 
     console.log(regContentResult)
-
+    return regContentResult
   });
+}
+
+// 将正则规则提取的每个单元格的内容(数组)进行重新编写，并将新的内容写入到新的单元格中。
+async function rewordEachCell(regContentResult) {
+
 }
 
 
@@ -200,7 +212,9 @@ export {
   readDirPath,
   readExcelStream,
   getHeaderCol,
-  getEachCell
+  getTargetCol,
+  getEachCell,
+  rewordEachCell
 }
 
 
