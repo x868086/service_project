@@ -15,7 +15,7 @@ const __dirname = dirname(__filename);
 console.log(__dirname);
 const excelPath = path.join(__dirname, configs.excelFilePath)
 
-import { readDirPath, readExcelStream, getHeaderCol, getTargetCol, getEachCell, rewordEachCell } from './excel-utils/excel-methods.js'
+import { readDirPath, readExcelStream, getHeaderCol, getTargetCol, getEachCell } from './excel-utils/excel-methods.js'
 
 
 // import { regInfo, regConfig } from './configs/reg-config.js'
@@ -56,14 +56,16 @@ async function rollup(excelPath) {
     // 只能读取文件夹下的某一个文件，需要改写？？？？？？？？？？
     let result = await readDirPath(excelPath)
     let filepath = path.join(excelPath, result[0])
-    let worksheet = await readExcelStream(filepath);
+    let { workbook, worksheet } = await readExcelStream(filepath);
 
     // 获取表格第一列，根据正则配置文件类型个数，在第一列后面增加对应个数的列（后续插入正则拆分结果单元格），然后返回修改后的表头
-    let headers = await getHeaderCol(worksheet)
+    let { headers, colLenth } = await getHeaderCol(worksheet)
 
     let colContent = await getTargetCol(headers, cellName, worksheet)
-    let rowResult = await getEachCell(colContent)
+    await getEachCell(colContent, worksheet, colLenth)
 
+    // ???如何提交workbook
+    // await workbook.commit()
 }
 
 

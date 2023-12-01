@@ -58,7 +58,7 @@ async function readExcelStream(filepath) {
   // });
 
   const worksheet = workbook.getWorksheet('foo');
-  return worksheet
+  return { workbook, worksheet }
 }
 
 // exceljs数据流原生方法
@@ -146,17 +146,19 @@ async function getHeaderCol(worksheet) {
       });
       // 读取正则配置文件，确定要拆分成多少列
       let addColums = []
-      for (var i = 0; i <= regConfig.length; i++) {
+      for (var i = 0; i < regConfig.length; i++) {
         addColums.push({
           header: `拆分${i}`,
-          key: `field{i}`
+          key: `field${i}`
         })
       }
       // 添加列标题
       worksheet.columns = [...worksheet.columns, ...addColums];
+    } else {
+      return
     }
   });
-  return headers
+  return { headers: headers, colLenth: worksheet.columns.length }
 
   // let colFlag = headers.find((e, i, a) => e.value === cellName).address.replace(/\d+/g, '')
   // const colContent = worksheet.getColumn(colFlag)
@@ -169,7 +171,7 @@ async function getTargetCol(headers, cellName, worksheet) {
   return colContent
 }
 
-async function getEachCell(colContent) {
+async function getEachCell(colContent, worksheet, colLenth) {
   colContent.eachCell({ includeEmpty: true }, function (cell, rowNumber) {
     console.log(cell.value, cell.text, cell.address, rowNumber)
 
@@ -192,13 +194,36 @@ async function getEachCell(colContent) {
       return stringRegCont(regContent, value)
     })
 
-    console.log(regContentResult)
-    return regContentResult
+    // console.log(regContentResult)
+    // return regContentResult
+    rewordEachCell(rowNumber, regContentResult, worksheet, colLenth)
   });
+
 }
 
 // 将正则规则提取的每个单元格的内容(数组)进行重新编写，并将新的内容写入到新的单元格中。
-async function rewordEachCell(regContentResult) {
+function rewordEachCell(rowNumber, regContentResult, worksheet, colLenth) {
+  // 当前拆分列 colFlag
+  // 待插入的列worksheet.columns
+  // 待插入的内容 数组regContentResult
+  if ((rowNumber === 1) || (regContentResult.length === 0)) {
+    return
+  }
+  let row = worksheet.getRow(rowNumber)
+  let range = regContentResult.length
+  for (let i = 0; i < range; i++) {
+    let str = regContentResult.shift()
+    let colNumber = colLenth - regContentResult.length
+    let cell = row.getCell(colNumber)
+    cell.value = str
+    let rewordCell = worksheet.getCell(cell.address)
+    // ?? 是否要增加await ???
+    // worksheet.commit()
+    console.log(rewordCell)
+  }
+
+
+
 
 }
 
