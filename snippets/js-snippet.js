@@ -10,7 +10,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 console.log(__dirname);
-const excelPath = path.join(__dirname, configs.excelFilePath)
+const excelPath = path.join(__dirname, configs.excelUploadPath)
 
 
 // 返回文件扩展名

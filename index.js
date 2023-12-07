@@ -13,9 +13,10 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 console.log(__dirname);
-const excelPath = path.join(__dirname, configs.excelFilePath)
+const excelPath = path.join(__dirname, configs.excelUploadPath)
+const outputPath = path.join(__dirname, configs.outputPath)
 
-import { readDirPath, readExcelStream, getHeaderCol, getTargetCol, getEachCell } from './excel-utils/excel-methods.js'
+import { readDirPath, readExcelStream, getHeaderCol, getTargetCol, getEachCell, saveFileStream } from './excel-utils/excel-methods.js'
 
 
 // import { regInfo, regConfig } from './configs/reg-config.js'
@@ -63,8 +64,8 @@ async function rollup(excelPath) {
 
     let colContent = await getTargetCol(headers, cellName, worksheet)
     await getEachCell(colContent, worksheet, colLenth)
-
-    // ???如何提交workbook
+    await saveFileStream(workbook, outputPath, 'ttt.xlsx')
+    // ???是否需要提交workbook
     // await workbook.commit()
 }
 

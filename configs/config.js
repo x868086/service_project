@@ -1,4 +1,5 @@
 const configs = {
-    excelFilePath: '/excel-file/'
+    excelUploadPath: '/upload-excel-file/',
+    outputPath: '/output-file/'
 }
 export default configs

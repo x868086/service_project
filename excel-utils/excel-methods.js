@@ -221,10 +221,17 @@ function rewordEachCell(rowNumber, regContentResult, worksheet, colLenth) {
     // worksheet.commit()
     console.log(rewordCell)
   }
+}
 
-
-
-
+async function saveFileStream(workbook, outPath, fileName) {
+  // await workbook.xlsx.writeFile(filepath);
+  // console.log(`File saved successfully to ${filepath}`);
+  const filepath = path.join(outPath, fileName);
+  const writeStream = fs.createWriteStream(filepath);
+  workbook.xlsx.write(writeStream)
+    .then(() => {
+      console.log(`Workbook written successfully to ${filepath}`);
+    });
 }
 
 
@@ -239,7 +246,8 @@ export {
   getHeaderCol,
   getTargetCol,
   getEachCell,
-  rewordEachCell
+  rewordEachCell,
+  saveFileStream
 }
 
 
