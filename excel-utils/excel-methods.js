@@ -235,6 +235,41 @@ async function saveFileStream(workbook, outPath, fileName) {
 }
 
 
+async function loadProgress() {
+  const fs = require('fs');
+
+  const filepath = 'example.txt';
+  const readStream = fs.createReadStream(filepath);
+
+  let totalBytesRead = 0;
+
+  readStream.on('data', (chunk) => {
+    totalBytesRead += chunk.length;
+    const percentage = (totalBytesRead / fs.statSync(filepath).size) * 100;
+
+    //fs.stat(filepath, (err, stats) => { ... })
+    //     const fs = require('fs').promises;
+    // const fs = require('fs');
+    // async function readFile(path) {
+    //   try {
+    //     const stats = await fs.stat(path);
+    //     if (stats.isFile()) {
+    //       const fileContent = await fs.readFile(path, 'utf-8');
+    //       console.log(fileContent);
+    //     } else {
+    //       console.log('The path is a directory.');
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
+
+    // readFile('/path/to/file.txt');
+    console.log(`已读取 ${percentage}%`);
+  });
+}
+
+
 
 
 

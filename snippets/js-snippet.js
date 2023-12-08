@@ -17,3 +17,29 @@ const excelPath = path.join(__dirname, configs.excelUploadPath)
 const filePath1 = '/path/to/file.txt';
 
 path.extname(filePath1) //输出'.txt'
+
+
+
+//fs-extra模块 文件操作
+/*
+fs-extra是一个Node.js模块，它添加了一些常用的文件系统方法，这些方法在Node.js的原始fs模块中没有提供。
+fs-extra建立在fs模块之上，并且添加了一些功能，使其更加易于使用和方便。
+npm install fs-extra
+const fs = require('fs-extra');
+const stats = fs.statSync('example.txt');
+stats.isFile()：检查是否为文件。
+stats.isDirectory()：检查是否为目录。
+stats.size：文件的大小（以字节为单位）。
+stats.mtime：最后修改时间。
+stats.atime：最后访问时间。
+stats.ctime：最后更改时间。
+
+fs-extra提供的一些额外功能包括：
+fs-extra.copy()：复制文件或目录。
+fs-extra.move()：移动（重命名）或复制文件或目录。
+fs-extra.emptyDir()：清空目录。
+fs-extra.ensureDir()：确保目录存在。
+fs-extra.ensureFile()：确保文件存在。
+fs-extra.readJson()：读取JSON文件并返回JSON对象。
+fs-extra.writeJson()：将JSON对象写入文件。
+*/
