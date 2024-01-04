@@ -64,7 +64,8 @@ async function rollup(excelPath) {
 
     let colContent = await getTargetCol(headers, cellName, worksheet)
     await getEachCell(colContent, worksheet, colLenth)
-    await saveFileStream(workbook, outputPath, 'ttt.xlsx')
+    // await saveFileStream(workbook, outputPath, 'ttt.xlsx')
+    await saveFileStream(workbook, outputPath, `${result[0]}-提取-.xlsx`)
     // ???是否需要提交workbook
     // await workbook.commit()
 }

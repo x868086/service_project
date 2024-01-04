@@ -57,7 +57,8 @@ async function readExcelStream(filepath) {
   //   console.log(worksheet,sheetId)
   // });
 
-  const worksheet = workbook.getWorksheet('foo');
+  // const worksheet = workbook.getWorksheet('foo');
+  const worksheet = workbook.getWorksheet(1);
   return { workbook, worksheet }
 }
 
