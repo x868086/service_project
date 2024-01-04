@@ -17,6 +17,7 @@ const excelPath = path.join(__dirname, configs.excelUploadPath)
 const outputPath = path.join(__dirname, configs.outputPath)
 
 import { readDirPath, readExcelStream, getHeaderCol, getTargetCol, getEachCell, saveFileStream } from './excel-utils/excel-methods.js'
+import { askQuestion } from './utils/read-line-methods.js'
 
 
 // import { regInfo, regConfig } from './configs/reg-config.js'
@@ -51,9 +52,9 @@ import { readDirPath, readExcelStream, getHeaderCol, getTargetCol, getEachCell, 
 
 
 
-async function rollup(excelPath) {
+async function rollup(excelPath, cellName) {
     // 手动指定表头列名称，需要改写？？？？？？？？？
-    let cellName = '处理结果'
+    // let cellName = '处理结果'
     // 只能读取文件夹下的某一个文件，需要改写？？？？？？？？？？
     let result = await readDirPath(excelPath)
     let filepath = path.join(excelPath, result[0])
@@ -71,12 +72,31 @@ async function rollup(excelPath) {
 }
 
 
+askQuestion.question(`客服全量工单辅助分析系统--您要拆分单元格表头是什么:`, (name) => {
+    console.log('用户:,' + name);
 
+    rollup(excelPath, name).catch(err => {
+        throw new Error(`读取excel文件目录出错,请确认文件是否上传,单元格表头是否填写正确${err}`)
+    })
+    askQuestion.close();
+});
 
+// askQuestion.on("line", function (line) {
+//     console.log("您输入的内容是：", line);
+// });
 
-rollup(excelPath).catch(err => {
-    throw new Error(`读取excel文件目录出错${err}`)
-})
+askQuestion.on("close", function () {
+    console.log("已退出输入框。");
+});
+// askQuestion.write(data[, mode])：向命令行输出data，可以模拟用户输入命令。
+
+askQuestion.on('error', (error) => {
+    console.error('读取命令行发生错误：', error);
+});
+
+// rollup(excelPath, '处理结果').catch(err => {
+//     throw new Error(`读取excel文件目录出错${err}`)
+// })
 
 
 
